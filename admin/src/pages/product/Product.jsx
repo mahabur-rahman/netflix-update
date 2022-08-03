@@ -22,7 +22,7 @@ export default function Product() {
       <div className="productTop">
         <div className="productTopRight">
           <div className="productInfoTop">
-            <img src={movie?.img} alt="" className="productInfoImg" />
+            <img src={movie?.imgSm} alt="" className="productInfoImg" />
             <span className="productName">{movie?.title}</span>
           </div>
           <div className="productInfoBottom">
