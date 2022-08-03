@@ -1,4 +1,5 @@
 import { useState } from "react";
+import storage from "../../firebase";
 import "./newProduct.css";
 
 export default function NewProduct() {
@@ -8,11 +9,32 @@ export default function NewProduct() {
   const [imgSm, setImgSm] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
 
   const handleChange = (e) => {
     const value = e.target.value;
 
     setMovie({ ...movie, [e.target.name]: value });
+  };
+
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = new Date().getTime() + item.label + item.file.name;
+      const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+    });
+  };
+
+  // upload
+  const handleClickUpload = (e) => {
+    e.preventDefault();
+
+    upload([
+      { file: img, label: "img" },
+      { file: imgTitle, label: "imgTitle" },
+      { file: imgSm, label: "imgSm" },
+      { file: trailer, label: "trailer" },
+      { file: video, label: "video" },
+    ]);
   };
 
   return (
@@ -115,7 +137,15 @@ export default function NewProduct() {
           />
         </div>
 
-        <button className="addProductButton">Create</button>
+        {uploaded === 5 ? (
+          <button className="addProductButton">Create</button>
+        ) : (
+          <button className="addProductButton" onClick={handleClickUpload}>
+            Upload
+          </button>
+        )}
+
+        {/* <button className="addProductButton">Create</button> */}
       </form>
     </div>
   );
