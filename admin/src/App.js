@@ -46,7 +46,7 @@ function App() {
               <Route path="/movies">
                 <ProductList />
               </Route>
-              <Route path="/product/:productId">
+              <Route path="/movie/:movieId">
                 <Product />
               </Route>
               <Route path="/newproduct">

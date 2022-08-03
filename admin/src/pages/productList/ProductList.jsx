@@ -6,13 +6,11 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { MovieContext } from "../../context/movieContext/movieContext";
-import { getMovies } from "../../context/movieContext/apiCalls";
+import { deleteMovie, getMovies } from "../../context/movieContext/apiCalls";
 
 export default function ProductList() {
   // const [data, setData] = useState(productRows);
   const { movies, dispatch } = useContext(MovieContext);
-
-  // console.log(movies);
 
   useEffect(() => {
     getMovies(dispatch);
@@ -20,6 +18,7 @@ export default function ProductList() {
 
   const handleDelete = (id) => {
     // setData(data.filter((item) => item.id !== id));
+    deleteMovie(id, dispatch);
   };
 
   const columns = [
@@ -32,7 +31,7 @@ export default function ProductList() {
         return (
           <div className="productListItem">
             <img className="productListImg" src={params.row.img} alt="" />
-            {params.row.name}
+            {params.row.title}
           </div>
         );
       },
@@ -49,12 +48,14 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/product/" + params.row.id}>
+            <Link
+              to={{ pathname: "/movie/" + params.row._id, movie: params.row }}
+            >
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row._id)}
             />
           </>
         );
@@ -70,7 +71,7 @@ export default function ProductList() {
         columns={columns}
         pageSize={8}
         checkboxSelection
-        getRowId={(rowId) => rowId._id}
+        getRowId={(r) => r._id}
       />
     </div>
   );
