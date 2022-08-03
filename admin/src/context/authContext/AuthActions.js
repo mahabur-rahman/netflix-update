@@ -12,3 +12,7 @@ export const loginFailure = () => ({
 });
 
 // logout
+
+export const logout = () => ({
+  type: "LOGOUT",
+});

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import { AuthContext } from "../../context/authContext/AuthContext";
 
 export default function Topbar() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -21,7 +24,14 @@ export default function Topbar() {
           <div className="topbarIconContainer">
             <Settings />
           </div>
-          <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
+          <img
+            src={
+              user?.profilePic ||
+              "https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+            }
+            alt=""
+            className="topAvatar"
+          />
         </div>
       </div>
     </div>
